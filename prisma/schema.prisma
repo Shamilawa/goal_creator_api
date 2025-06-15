@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Goal {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  goalTitle   String   @map("goal_title")
+  deadline    DateTime
+  outcome     String
+  status      Status   @default(IN_PROGRESS)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Relationships
+  milestones  Milestone[]
+  
+  @@map("goals")
+}
+
+model Milestone {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  milestoneName     String   @map("milestone_name")
+  milestoneDeadline DateTime @map("milestone_deadline")
+  milestoneOutcome  String   @map("milestone_outcome")
+  status            Status   @default(IN_PROGRESS)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  
+  // Foreign Keys
+  goalId            String   @map("goal_id") @db.ObjectId
+  
+  // Relationships
+  goal              Goal     @relation(fields: [goalId], references: [id])
+  actionSteps       ActionStep[]
+  
+  @@map("milestones")
+}
+
+model ActionStep {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  actionName     String   @map("action_name")
+  actionDeadline DateTime @map("action_deadline")
+  status         Status   @default(IN_PROGRESS)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  
+  // Foreign Keys
+  milestoneId    String   @map("milestone_id") @db.ObjectId
+  
+  // Relationships
+  milestone      Milestone @relation(fields: [milestoneId], references: [id])
+  
+  @@map("action_steps")
+}
+
+enum Status {
+  IN_PROGRESS   @map("in-progress")
+  COMPLETED     @map("completed")
+  NOT_STARTED   @map("not-started")
+  CANCELLED     @map("cancelled")
+  
+  @@map("status")
+}
