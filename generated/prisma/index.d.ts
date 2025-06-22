@@ -14,6 +14,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model Vision
+ * 
+ */
+export type Vision = $Result.DefaultSelection<Prisma.$VisionPayload>
+/**
  * Model Goal
  * 
  */
@@ -42,11 +47,25 @@ export namespace $Enums {
 
 export type Status = (typeof Status)[keyof typeof Status]
 
+
+export const Type: {
+  VISION: 'VISION',
+  GOAL: 'GOAL',
+  MILESTONE: 'MILESTONE',
+  ACTION_STEP: 'ACTION_STEP'
+};
+
+export type Type = (typeof Type)[keyof typeof Type]
+
 }
 
 export type Status = $Enums.Status
 
 export const Status: typeof $Enums.Status
+
+export type Type = $Enums.Type
+
+export const Type: typeof $Enums.Type
 
 /**
  * ##  Prisma Client ʲˢ
@@ -55,8 +74,8 @@ export const Status: typeof $Enums.Status
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Goals
- * const goals = await prisma.goal.findMany()
+ * // Fetch zero or more Visions
+ * const visions = await prisma.vision.findMany()
  * ```
  *
  *
@@ -76,8 +95,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Goals
-   * const goals = await prisma.goal.findMany()
+   * // Fetch zero or more Visions
+   * const visions = await prisma.vision.findMany()
    * ```
    *
    *
@@ -141,6 +160,16 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.vision`: Exposes CRUD operations for the **Vision** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Visions
+    * const visions = await prisma.vision.findMany()
+    * ```
+    */
+  get vision(): Prisma.VisionDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.goal`: Exposes CRUD operations for the **Goal** model.
     * Example usage:
     * ```ts
@@ -609,6 +638,7 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    Vision: 'Vision',
     Goal: 'Goal',
     Milestone: 'Milestone',
     ActionStep: 'ActionStep'
@@ -630,10 +660,84 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "goal" | "milestone" | "actionStep"
+      modelProps: "vision" | "goal" | "milestone" | "actionStep"
       txIsolationLevel: never
     }
     model: {
+      Vision: {
+        payload: Prisma.$VisionPayload<ExtArgs>
+        fields: Prisma.VisionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VisionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VisionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload>
+          }
+          findFirst: {
+            args: Prisma.VisionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VisionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload>
+          }
+          findMany: {
+            args: Prisma.VisionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload>[]
+          }
+          create: {
+            args: Prisma.VisionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload>
+          }
+          createMany: {
+            args: Prisma.VisionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.VisionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload>
+          }
+          update: {
+            args: Prisma.VisionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload>
+          }
+          deleteMany: {
+            args: Prisma.VisionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VisionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VisionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VisionPayload>
+          }
+          aggregate: {
+            args: Prisma.VisionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVision>
+          }
+          groupBy: {
+            args: Prisma.VisionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VisionGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.VisionFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.VisionAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.VisionCountArgs<ExtArgs>
+            result: $Utils.Optional<VisionCountAggregateOutputType> | number
+          }
+        }
+      }
       Goal: {
         payload: Prisma.$GoalPayload<ExtArgs>
         fields: Prisma.GoalFieldRefs
@@ -927,6 +1031,7 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    vision?: VisionOmit
     goal?: GoalOmit
     milestone?: MilestoneOmit
     actionStep?: ActionStepOmit
@@ -1020,6 +1125,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type VisionCountOutputType
+   */
+
+  export type VisionCountOutputType = {
+    goals: number
+  }
+
+  export type VisionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    goals?: boolean | VisionCountOutputTypeCountGoalsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * VisionCountOutputType without action
+   */
+  export type VisionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VisionCountOutputType
+     */
+    select?: VisionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * VisionCountOutputType without action
+   */
+  export type VisionCountOutputTypeCountGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GoalWhereInput
+  }
+
+
+  /**
    * Count Type GoalCountOutputType
    */
 
@@ -1086,6 +1222,1033 @@ export namespace Prisma {
    */
 
   /**
+   * Model Vision
+   */
+
+  export type AggregateVision = {
+    _count: VisionCountAggregateOutputType | null
+    _min: VisionMinAggregateOutputType | null
+    _max: VisionMaxAggregateOutputType | null
+  }
+
+  export type VisionMinAggregateOutputType = {
+    id: string | null
+    visionTitle: string | null
+    visionDescription: string | null
+    status: $Enums.Status | null
+    type: $Enums.Type | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VisionMaxAggregateOutputType = {
+    id: string | null
+    visionTitle: string | null
+    visionDescription: string | null
+    status: $Enums.Status | null
+    type: $Enums.Type | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VisionCountAggregateOutputType = {
+    id: number
+    visionTitle: number
+    visionDescription: number
+    status: number
+    type: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VisionMinAggregateInputType = {
+    id?: true
+    visionTitle?: true
+    visionDescription?: true
+    status?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VisionMaxAggregateInputType = {
+    id?: true
+    visionTitle?: true
+    visionDescription?: true
+    status?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VisionCountAggregateInputType = {
+    id?: true
+    visionTitle?: true
+    visionDescription?: true
+    status?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VisionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vision to aggregate.
+     */
+    where?: VisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Visions to fetch.
+     */
+    orderBy?: VisionOrderByWithRelationInput | VisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Visions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Visions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Visions
+    **/
+    _count?: true | VisionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VisionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VisionMaxAggregateInputType
+  }
+
+  export type GetVisionAggregateType<T extends VisionAggregateArgs> = {
+        [P in keyof T & keyof AggregateVision]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVision[P]>
+      : GetScalarType<T[P], AggregateVision[P]>
+  }
+
+
+
+
+  export type VisionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VisionWhereInput
+    orderBy?: VisionOrderByWithAggregationInput | VisionOrderByWithAggregationInput[]
+    by: VisionScalarFieldEnum[] | VisionScalarFieldEnum
+    having?: VisionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VisionCountAggregateInputType | true
+    _min?: VisionMinAggregateInputType
+    _max?: VisionMaxAggregateInputType
+  }
+
+  export type VisionGroupByOutputType = {
+    id: string
+    visionTitle: string
+    visionDescription: string
+    status: $Enums.Status
+    type: $Enums.Type
+    createdAt: Date
+    updatedAt: Date
+    _count: VisionCountAggregateOutputType | null
+    _min: VisionMinAggregateOutputType | null
+    _max: VisionMaxAggregateOutputType | null
+  }
+
+  type GetVisionGroupByPayload<T extends VisionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VisionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VisionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VisionGroupByOutputType[P]>
+            : GetScalarType<T[P], VisionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VisionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    visionTitle?: boolean
+    visionDescription?: boolean
+    status?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    goals?: boolean | Vision$goalsArgs<ExtArgs>
+    _count?: boolean | VisionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vision"]>
+
+
+
+  export type VisionSelectScalar = {
+    id?: boolean
+    visionTitle?: boolean
+    visionDescription?: boolean
+    status?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VisionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "visionTitle" | "visionDescription" | "status" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["vision"]>
+  export type VisionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    goals?: boolean | Vision$goalsArgs<ExtArgs>
+    _count?: boolean | VisionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $VisionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Vision"
+    objects: {
+      goals: Prisma.$GoalPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      visionTitle: string
+      visionDescription: string
+      status: $Enums.Status
+      type: $Enums.Type
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["vision"]>
+    composites: {}
+  }
+
+  type VisionGetPayload<S extends boolean | null | undefined | VisionDefaultArgs> = $Result.GetResult<Prisma.$VisionPayload, S>
+
+  type VisionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VisionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VisionCountAggregateInputType | true
+    }
+
+  export interface VisionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Vision'], meta: { name: 'Vision' } }
+    /**
+     * Find zero or one Vision that matches the filter.
+     * @param {VisionFindUniqueArgs} args - Arguments to find a Vision
+     * @example
+     * // Get one Vision
+     * const vision = await prisma.vision.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VisionFindUniqueArgs>(args: SelectSubset<T, VisionFindUniqueArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Vision that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VisionFindUniqueOrThrowArgs} args - Arguments to find a Vision
+     * @example
+     * // Get one Vision
+     * const vision = await prisma.vision.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VisionFindUniqueOrThrowArgs>(args: SelectSubset<T, VisionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vision that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VisionFindFirstArgs} args - Arguments to find a Vision
+     * @example
+     * // Get one Vision
+     * const vision = await prisma.vision.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VisionFindFirstArgs>(args?: SelectSubset<T, VisionFindFirstArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vision that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VisionFindFirstOrThrowArgs} args - Arguments to find a Vision
+     * @example
+     * // Get one Vision
+     * const vision = await prisma.vision.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VisionFindFirstOrThrowArgs>(args?: SelectSubset<T, VisionFindFirstOrThrowArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Visions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VisionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Visions
+     * const visions = await prisma.vision.findMany()
+     * 
+     * // Get first 10 Visions
+     * const visions = await prisma.vision.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const visionWithIdOnly = await prisma.vision.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VisionFindManyArgs>(args?: SelectSubset<T, VisionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Vision.
+     * @param {VisionCreateArgs} args - Arguments to create a Vision.
+     * @example
+     * // Create one Vision
+     * const Vision = await prisma.vision.create({
+     *   data: {
+     *     // ... data to create a Vision
+     *   }
+     * })
+     * 
+     */
+    create<T extends VisionCreateArgs>(args: SelectSubset<T, VisionCreateArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Visions.
+     * @param {VisionCreateManyArgs} args - Arguments to create many Visions.
+     * @example
+     * // Create many Visions
+     * const vision = await prisma.vision.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VisionCreateManyArgs>(args?: SelectSubset<T, VisionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Vision.
+     * @param {VisionDeleteArgs} args - Arguments to delete one Vision.
+     * @example
+     * // Delete one Vision
+     * const Vision = await prisma.vision.delete({
+     *   where: {
+     *     // ... filter to delete one Vision
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VisionDeleteArgs>(args: SelectSubset<T, VisionDeleteArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Vision.
+     * @param {VisionUpdateArgs} args - Arguments to update one Vision.
+     * @example
+     * // Update one Vision
+     * const vision = await prisma.vision.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VisionUpdateArgs>(args: SelectSubset<T, VisionUpdateArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Visions.
+     * @param {VisionDeleteManyArgs} args - Arguments to filter Visions to delete.
+     * @example
+     * // Delete a few Visions
+     * const { count } = await prisma.vision.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VisionDeleteManyArgs>(args?: SelectSubset<T, VisionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Visions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VisionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Visions
+     * const vision = await prisma.vision.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VisionUpdateManyArgs>(args: SelectSubset<T, VisionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Vision.
+     * @param {VisionUpsertArgs} args - Arguments to update or create a Vision.
+     * @example
+     * // Update or create a Vision
+     * const vision = await prisma.vision.upsert({
+     *   create: {
+     *     // ... data to create a Vision
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Vision we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VisionUpsertArgs>(args: SelectSubset<T, VisionUpsertArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Visions that matches the filter.
+     * @param {VisionFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const vision = await prisma.vision.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: VisionFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a Vision.
+     * @param {VisionAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const vision = await prisma.vision.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: VisionAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of Visions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VisionCountArgs} args - Arguments to filter Visions to count.
+     * @example
+     * // Count the number of Visions
+     * const count = await prisma.vision.count({
+     *   where: {
+     *     // ... the filter for the Visions we want to count
+     *   }
+     * })
+    **/
+    count<T extends VisionCountArgs>(
+      args?: Subset<T, VisionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VisionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Vision.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VisionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VisionAggregateArgs>(args: Subset<T, VisionAggregateArgs>): Prisma.PrismaPromise<GetVisionAggregateType<T>>
+
+    /**
+     * Group by Vision.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VisionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VisionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VisionGroupByArgs['orderBy'] }
+        : { orderBy?: VisionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VisionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVisionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Vision model
+   */
+  readonly fields: VisionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Vision.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VisionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    goals<T extends Vision$goalsArgs<ExtArgs> = {}>(args?: Subset<T, Vision$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Vision model
+   */
+  interface VisionFieldRefs {
+    readonly id: FieldRef<"Vision", 'String'>
+    readonly visionTitle: FieldRef<"Vision", 'String'>
+    readonly visionDescription: FieldRef<"Vision", 'String'>
+    readonly status: FieldRef<"Vision", 'Status'>
+    readonly type: FieldRef<"Vision", 'Type'>
+    readonly createdAt: FieldRef<"Vision", 'DateTime'>
+    readonly updatedAt: FieldRef<"Vision", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Vision findUnique
+   */
+  export type VisionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * Filter, which Vision to fetch.
+     */
+    where: VisionWhereUniqueInput
+  }
+
+  /**
+   * Vision findUniqueOrThrow
+   */
+  export type VisionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * Filter, which Vision to fetch.
+     */
+    where: VisionWhereUniqueInput
+  }
+
+  /**
+   * Vision findFirst
+   */
+  export type VisionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * Filter, which Vision to fetch.
+     */
+    where?: VisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Visions to fetch.
+     */
+    orderBy?: VisionOrderByWithRelationInput | VisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Visions.
+     */
+    cursor?: VisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Visions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Visions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Visions.
+     */
+    distinct?: VisionScalarFieldEnum | VisionScalarFieldEnum[]
+  }
+
+  /**
+   * Vision findFirstOrThrow
+   */
+  export type VisionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * Filter, which Vision to fetch.
+     */
+    where?: VisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Visions to fetch.
+     */
+    orderBy?: VisionOrderByWithRelationInput | VisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Visions.
+     */
+    cursor?: VisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Visions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Visions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Visions.
+     */
+    distinct?: VisionScalarFieldEnum | VisionScalarFieldEnum[]
+  }
+
+  /**
+   * Vision findMany
+   */
+  export type VisionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * Filter, which Visions to fetch.
+     */
+    where?: VisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Visions to fetch.
+     */
+    orderBy?: VisionOrderByWithRelationInput | VisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Visions.
+     */
+    cursor?: VisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Visions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Visions.
+     */
+    skip?: number
+    distinct?: VisionScalarFieldEnum | VisionScalarFieldEnum[]
+  }
+
+  /**
+   * Vision create
+   */
+  export type VisionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Vision.
+     */
+    data: XOR<VisionCreateInput, VisionUncheckedCreateInput>
+  }
+
+  /**
+   * Vision createMany
+   */
+  export type VisionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Visions.
+     */
+    data: VisionCreateManyInput | VisionCreateManyInput[]
+  }
+
+  /**
+   * Vision update
+   */
+  export type VisionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Vision.
+     */
+    data: XOR<VisionUpdateInput, VisionUncheckedUpdateInput>
+    /**
+     * Choose, which Vision to update.
+     */
+    where: VisionWhereUniqueInput
+  }
+
+  /**
+   * Vision updateMany
+   */
+  export type VisionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Visions.
+     */
+    data: XOR<VisionUpdateManyMutationInput, VisionUncheckedUpdateManyInput>
+    /**
+     * Filter which Visions to update
+     */
+    where?: VisionWhereInput
+    /**
+     * Limit how many Visions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vision upsert
+   */
+  export type VisionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Vision to update in case it exists.
+     */
+    where: VisionWhereUniqueInput
+    /**
+     * In case the Vision found by the `where` argument doesn't exist, create a new Vision with this data.
+     */
+    create: XOR<VisionCreateInput, VisionUncheckedCreateInput>
+    /**
+     * In case the Vision was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VisionUpdateInput, VisionUncheckedUpdateInput>
+  }
+
+  /**
+   * Vision delete
+   */
+  export type VisionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+    /**
+     * Filter which Vision to delete.
+     */
+    where: VisionWhereUniqueInput
+  }
+
+  /**
+   * Vision deleteMany
+   */
+  export type VisionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Visions to delete
+     */
+    where?: VisionWhereInput
+    /**
+     * Limit how many Visions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vision findRaw
+   */
+  export type VisionFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Vision aggregateRaw
+   */
+  export type VisionAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Vision.goals
+   */
+  export type Vision$goalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Goal
+     */
+    select?: GoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Goal
+     */
+    omit?: GoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoalInclude<ExtArgs> | null
+    where?: GoalWhereInput
+    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
+    cursor?: GoalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
+  }
+
+  /**
+   * Vision without action
+   */
+  export type VisionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vision
+     */
+    select?: VisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vision
+     */
+    omit?: VisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VisionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Goal
    */
 
@@ -1097,64 +2260,76 @@ export namespace Prisma {
 
   export type GoalMinAggregateOutputType = {
     id: string | null
+    type: $Enums.Type | null
     goalTitle: string | null
     deadline: Date | null
     outcome: string | null
     status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
+    visionId: string | null
   }
 
   export type GoalMaxAggregateOutputType = {
     id: string | null
+    type: $Enums.Type | null
     goalTitle: string | null
     deadline: Date | null
     outcome: string | null
     status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
+    visionId: string | null
   }
 
   export type GoalCountAggregateOutputType = {
     id: number
+    type: number
     goalTitle: number
     deadline: number
     outcome: number
     status: number
     createdAt: number
     updatedAt: number
+    visionId: number
     _all: number
   }
 
 
   export type GoalMinAggregateInputType = {
     id?: true
+    type?: true
     goalTitle?: true
     deadline?: true
     outcome?: true
     status?: true
     createdAt?: true
     updatedAt?: true
+    visionId?: true
   }
 
   export type GoalMaxAggregateInputType = {
     id?: true
+    type?: true
     goalTitle?: true
     deadline?: true
     outcome?: true
     status?: true
     createdAt?: true
     updatedAt?: true
+    visionId?: true
   }
 
   export type GoalCountAggregateInputType = {
     id?: true
+    type?: true
     goalTitle?: true
     deadline?: true
     outcome?: true
     status?: true
     createdAt?: true
     updatedAt?: true
+    visionId?: true
     _all?: true
   }
 
@@ -1232,12 +2407,14 @@ export namespace Prisma {
 
   export type GoalGroupByOutputType = {
     id: string
+    type: $Enums.Type
     goalTitle: string
     deadline: Date
     outcome: string
     status: $Enums.Status
     createdAt: Date
     updatedAt: Date
+    visionId: string
     _count: GoalCountAggregateOutputType | null
     _min: GoalMinAggregateOutputType | null
     _max: GoalMaxAggregateOutputType | null
@@ -1259,12 +2436,15 @@ export namespace Prisma {
 
   export type GoalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    type?: boolean
     goalTitle?: boolean
     deadline?: boolean
     outcome?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    visionId?: boolean
+    vision?: boolean | VisionDefaultArgs<ExtArgs>
     milestones?: boolean | Goal$milestonesArgs<ExtArgs>
     _count?: boolean | GoalCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["goal"]>
@@ -1273,16 +2453,19 @@ export namespace Prisma {
 
   export type GoalSelectScalar = {
     id?: boolean
+    type?: boolean
     goalTitle?: boolean
     deadline?: boolean
     outcome?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    visionId?: boolean
   }
 
-  export type GoalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "goalTitle" | "deadline" | "outcome" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["goal"]>
+  export type GoalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "goalTitle" | "deadline" | "outcome" | "status" | "createdAt" | "updatedAt" | "visionId", ExtArgs["result"]["goal"]>
   export type GoalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vision?: boolean | VisionDefaultArgs<ExtArgs>
     milestones?: boolean | Goal$milestonesArgs<ExtArgs>
     _count?: boolean | GoalCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -1290,16 +2473,19 @@ export namespace Prisma {
   export type $GoalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Goal"
     objects: {
+      vision: Prisma.$VisionPayload<ExtArgs>
       milestones: Prisma.$MilestonePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      type: $Enums.Type
       goalTitle: string
       deadline: Date
       outcome: string
       status: $Enums.Status
       createdAt: Date
       updatedAt: Date
+      visionId: string
     }, ExtArgs["result"]["goal"]>
     composites: {}
   }
@@ -1663,6 +2849,7 @@ export namespace Prisma {
    */
   export interface Prisma__GoalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    vision<T extends VisionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VisionDefaultArgs<ExtArgs>>): Prisma__VisionClient<$Result.GetResult<Prisma.$VisionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     milestones<T extends Goal$milestonesArgs<ExtArgs> = {}>(args?: Subset<T, Goal$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1694,12 +2881,14 @@ export namespace Prisma {
    */
   interface GoalFieldRefs {
     readonly id: FieldRef<"Goal", 'String'>
+    readonly type: FieldRef<"Goal", 'Type'>
     readonly goalTitle: FieldRef<"Goal", 'String'>
     readonly deadline: FieldRef<"Goal", 'DateTime'>
     readonly outcome: FieldRef<"Goal", 'String'>
     readonly status: FieldRef<"Goal", 'Status'>
     readonly createdAt: FieldRef<"Goal", 'DateTime'>
     readonly updatedAt: FieldRef<"Goal", 'DateTime'>
+    readonly visionId: FieldRef<"Goal", 'String'>
   }
     
 
@@ -2124,6 +3313,7 @@ export namespace Prisma {
 
   export type MilestoneMinAggregateOutputType = {
     id: string | null
+    type: $Enums.Type | null
     milestoneName: string | null
     milestoneDeadline: Date | null
     milestoneOutcome: string | null
@@ -2135,6 +3325,7 @@ export namespace Prisma {
 
   export type MilestoneMaxAggregateOutputType = {
     id: string | null
+    type: $Enums.Type | null
     milestoneName: string | null
     milestoneDeadline: Date | null
     milestoneOutcome: string | null
@@ -2146,6 +3337,7 @@ export namespace Prisma {
 
   export type MilestoneCountAggregateOutputType = {
     id: number
+    type: number
     milestoneName: number
     milestoneDeadline: number
     milestoneOutcome: number
@@ -2159,6 +3351,7 @@ export namespace Prisma {
 
   export type MilestoneMinAggregateInputType = {
     id?: true
+    type?: true
     milestoneName?: true
     milestoneDeadline?: true
     milestoneOutcome?: true
@@ -2170,6 +3363,7 @@ export namespace Prisma {
 
   export type MilestoneMaxAggregateInputType = {
     id?: true
+    type?: true
     milestoneName?: true
     milestoneDeadline?: true
     milestoneOutcome?: true
@@ -2181,6 +3375,7 @@ export namespace Prisma {
 
   export type MilestoneCountAggregateInputType = {
     id?: true
+    type?: true
     milestoneName?: true
     milestoneDeadline?: true
     milestoneOutcome?: true
@@ -2265,6 +3460,7 @@ export namespace Prisma {
 
   export type MilestoneGroupByOutputType = {
     id: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date
     milestoneOutcome: string
@@ -2293,6 +3489,7 @@ export namespace Prisma {
 
   export type MilestoneSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    type?: boolean
     milestoneName?: boolean
     milestoneDeadline?: boolean
     milestoneOutcome?: boolean
@@ -2309,6 +3506,7 @@ export namespace Prisma {
 
   export type MilestoneSelectScalar = {
     id?: boolean
+    type?: boolean
     milestoneName?: boolean
     milestoneDeadline?: boolean
     milestoneOutcome?: boolean
@@ -2318,7 +3516,7 @@ export namespace Prisma {
     goalId?: boolean
   }
 
-  export type MilestoneOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "milestoneName" | "milestoneDeadline" | "milestoneOutcome" | "status" | "createdAt" | "updatedAt" | "goalId", ExtArgs["result"]["milestone"]>
+  export type MilestoneOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "milestoneName" | "milestoneDeadline" | "milestoneOutcome" | "status" | "createdAt" | "updatedAt" | "goalId", ExtArgs["result"]["milestone"]>
   export type MilestoneInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     goal?: boolean | GoalDefaultArgs<ExtArgs>
     actionSteps?: boolean | Milestone$actionStepsArgs<ExtArgs>
@@ -2333,6 +3531,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      type: $Enums.Type
       milestoneName: string
       milestoneDeadline: Date
       milestoneOutcome: string
@@ -2735,6 +3934,7 @@ export namespace Prisma {
    */
   interface MilestoneFieldRefs {
     readonly id: FieldRef<"Milestone", 'String'>
+    readonly type: FieldRef<"Milestone", 'Type'>
     readonly milestoneName: FieldRef<"Milestone", 'String'>
     readonly milestoneDeadline: FieldRef<"Milestone", 'DateTime'>
     readonly milestoneOutcome: FieldRef<"Milestone", 'String'>
@@ -3166,6 +4366,7 @@ export namespace Prisma {
 
   export type ActionStepMinAggregateOutputType = {
     id: string | null
+    type: $Enums.Type | null
     actionName: string | null
     actionDeadline: Date | null
     status: $Enums.Status | null
@@ -3176,6 +4377,7 @@ export namespace Prisma {
 
   export type ActionStepMaxAggregateOutputType = {
     id: string | null
+    type: $Enums.Type | null
     actionName: string | null
     actionDeadline: Date | null
     status: $Enums.Status | null
@@ -3186,6 +4388,7 @@ export namespace Prisma {
 
   export type ActionStepCountAggregateOutputType = {
     id: number
+    type: number
     actionName: number
     actionDeadline: number
     status: number
@@ -3198,6 +4401,7 @@ export namespace Prisma {
 
   export type ActionStepMinAggregateInputType = {
     id?: true
+    type?: true
     actionName?: true
     actionDeadline?: true
     status?: true
@@ -3208,6 +4412,7 @@ export namespace Prisma {
 
   export type ActionStepMaxAggregateInputType = {
     id?: true
+    type?: true
     actionName?: true
     actionDeadline?: true
     status?: true
@@ -3218,6 +4423,7 @@ export namespace Prisma {
 
   export type ActionStepCountAggregateInputType = {
     id?: true
+    type?: true
     actionName?: true
     actionDeadline?: true
     status?: true
@@ -3301,6 +4507,7 @@ export namespace Prisma {
 
   export type ActionStepGroupByOutputType = {
     id: string
+    type: $Enums.Type
     actionName: string
     actionDeadline: Date
     status: $Enums.Status
@@ -3328,6 +4535,7 @@ export namespace Prisma {
 
   export type ActionStepSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    type?: boolean
     actionName?: boolean
     actionDeadline?: boolean
     status?: boolean
@@ -3341,6 +4549,7 @@ export namespace Prisma {
 
   export type ActionStepSelectScalar = {
     id?: boolean
+    type?: boolean
     actionName?: boolean
     actionDeadline?: boolean
     status?: boolean
@@ -3349,7 +4558,7 @@ export namespace Prisma {
     milestoneId?: boolean
   }
 
-  export type ActionStepOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "actionName" | "actionDeadline" | "status" | "createdAt" | "updatedAt" | "milestoneId", ExtArgs["result"]["actionStep"]>
+  export type ActionStepOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "actionName" | "actionDeadline" | "status" | "createdAt" | "updatedAt" | "milestoneId", ExtArgs["result"]["actionStep"]>
   export type ActionStepInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     milestone?: boolean | MilestoneDefaultArgs<ExtArgs>
   }
@@ -3361,6 +4570,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      type: $Enums.Type
       actionName: string
       actionDeadline: Date
       status: $Enums.Status
@@ -3761,6 +4971,7 @@ export namespace Prisma {
    */
   interface ActionStepFieldRefs {
     readonly id: FieldRef<"ActionStep", 'String'>
+    readonly type: FieldRef<"ActionStep", 'Type'>
     readonly actionName: FieldRef<"ActionStep", 'String'>
     readonly actionDeadline: FieldRef<"ActionStep", 'DateTime'>
     readonly status: FieldRef<"ActionStep", 'Status'>
@@ -4159,14 +5370,29 @@ export namespace Prisma {
    * Enums
    */
 
+  export const VisionScalarFieldEnum: {
+    id: 'id',
+    visionTitle: 'visionTitle',
+    visionDescription: 'visionDescription',
+    status: 'status',
+    type: 'type',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VisionScalarFieldEnum = (typeof VisionScalarFieldEnum)[keyof typeof VisionScalarFieldEnum]
+
+
   export const GoalScalarFieldEnum: {
     id: 'id',
+    type: 'type',
     goalTitle: 'goalTitle',
     deadline: 'deadline',
     outcome: 'outcome',
     status: 'status',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    visionId: 'visionId'
   };
 
   export type GoalScalarFieldEnum = (typeof GoalScalarFieldEnum)[keyof typeof GoalScalarFieldEnum]
@@ -4174,6 +5400,7 @@ export namespace Prisma {
 
   export const MilestoneScalarFieldEnum: {
     id: 'id',
+    type: 'type',
     milestoneName: 'milestoneName',
     milestoneDeadline: 'milestoneDeadline',
     milestoneOutcome: 'milestoneOutcome',
@@ -4188,6 +5415,7 @@ export namespace Prisma {
 
   export const ActionStepScalarFieldEnum: {
     id: 'id',
+    type: 'type',
     actionName: 'actionName',
     actionDeadline: 'actionDeadline',
     status: 'status',
@@ -4235,20 +5463,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Status'
    */
   export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
@@ -4259,6 +5473,34 @@ export namespace Prisma {
    * Reference to a field of type 'Status[]'
    */
   export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Type'
+   */
+  export type EnumTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Type'>
+    
+
+
+  /**
+   * Reference to a field of type 'Type[]'
+   */
+  export type ListEnumTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Type[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -4279,28 +5521,99 @@ export namespace Prisma {
    */
 
 
+  export type VisionWhereInput = {
+    AND?: VisionWhereInput | VisionWhereInput[]
+    OR?: VisionWhereInput[]
+    NOT?: VisionWhereInput | VisionWhereInput[]
+    id?: StringFilter<"Vision"> | string
+    visionTitle?: StringFilter<"Vision"> | string
+    visionDescription?: StringFilter<"Vision"> | string
+    status?: EnumStatusFilter<"Vision"> | $Enums.Status
+    type?: EnumTypeFilter<"Vision"> | $Enums.Type
+    createdAt?: DateTimeFilter<"Vision"> | Date | string
+    updatedAt?: DateTimeFilter<"Vision"> | Date | string
+    goals?: GoalListRelationFilter
+  }
+
+  export type VisionOrderByWithRelationInput = {
+    id?: SortOrder
+    visionTitle?: SortOrder
+    visionDescription?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    goals?: GoalOrderByRelationAggregateInput
+  }
+
+  export type VisionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: VisionWhereInput | VisionWhereInput[]
+    OR?: VisionWhereInput[]
+    NOT?: VisionWhereInput | VisionWhereInput[]
+    visionTitle?: StringFilter<"Vision"> | string
+    visionDescription?: StringFilter<"Vision"> | string
+    status?: EnumStatusFilter<"Vision"> | $Enums.Status
+    type?: EnumTypeFilter<"Vision"> | $Enums.Type
+    createdAt?: DateTimeFilter<"Vision"> | Date | string
+    updatedAt?: DateTimeFilter<"Vision"> | Date | string
+    goals?: GoalListRelationFilter
+  }, "id">
+
+  export type VisionOrderByWithAggregationInput = {
+    id?: SortOrder
+    visionTitle?: SortOrder
+    visionDescription?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VisionCountOrderByAggregateInput
+    _max?: VisionMaxOrderByAggregateInput
+    _min?: VisionMinOrderByAggregateInput
+  }
+
+  export type VisionScalarWhereWithAggregatesInput = {
+    AND?: VisionScalarWhereWithAggregatesInput | VisionScalarWhereWithAggregatesInput[]
+    OR?: VisionScalarWhereWithAggregatesInput[]
+    NOT?: VisionScalarWhereWithAggregatesInput | VisionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Vision"> | string
+    visionTitle?: StringWithAggregatesFilter<"Vision"> | string
+    visionDescription?: StringWithAggregatesFilter<"Vision"> | string
+    status?: EnumStatusWithAggregatesFilter<"Vision"> | $Enums.Status
+    type?: EnumTypeWithAggregatesFilter<"Vision"> | $Enums.Type
+    createdAt?: DateTimeWithAggregatesFilter<"Vision"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Vision"> | Date | string
+  }
+
   export type GoalWhereInput = {
     AND?: GoalWhereInput | GoalWhereInput[]
     OR?: GoalWhereInput[]
     NOT?: GoalWhereInput | GoalWhereInput[]
     id?: StringFilter<"Goal"> | string
+    type?: EnumTypeFilter<"Goal"> | $Enums.Type
     goalTitle?: StringFilter<"Goal"> | string
     deadline?: DateTimeFilter<"Goal"> | Date | string
     outcome?: StringFilter<"Goal"> | string
     status?: EnumStatusFilter<"Goal"> | $Enums.Status
     createdAt?: DateTimeFilter<"Goal"> | Date | string
     updatedAt?: DateTimeFilter<"Goal"> | Date | string
+    visionId?: StringFilter<"Goal"> | string
+    vision?: XOR<VisionScalarRelationFilter, VisionWhereInput>
     milestones?: MilestoneListRelationFilter
   }
 
   export type GoalOrderByWithRelationInput = {
     id?: SortOrder
+    type?: SortOrder
     goalTitle?: SortOrder
     deadline?: SortOrder
     outcome?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    visionId?: SortOrder
+    vision?: VisionOrderByWithRelationInput
     milestones?: MilestoneOrderByRelationAggregateInput
   }
 
@@ -4309,23 +5622,28 @@ export namespace Prisma {
     AND?: GoalWhereInput | GoalWhereInput[]
     OR?: GoalWhereInput[]
     NOT?: GoalWhereInput | GoalWhereInput[]
+    type?: EnumTypeFilter<"Goal"> | $Enums.Type
     goalTitle?: StringFilter<"Goal"> | string
     deadline?: DateTimeFilter<"Goal"> | Date | string
     outcome?: StringFilter<"Goal"> | string
     status?: EnumStatusFilter<"Goal"> | $Enums.Status
     createdAt?: DateTimeFilter<"Goal"> | Date | string
     updatedAt?: DateTimeFilter<"Goal"> | Date | string
+    visionId?: StringFilter<"Goal"> | string
+    vision?: XOR<VisionScalarRelationFilter, VisionWhereInput>
     milestones?: MilestoneListRelationFilter
   }, "id">
 
   export type GoalOrderByWithAggregationInput = {
     id?: SortOrder
+    type?: SortOrder
     goalTitle?: SortOrder
     deadline?: SortOrder
     outcome?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    visionId?: SortOrder
     _count?: GoalCountOrderByAggregateInput
     _max?: GoalMaxOrderByAggregateInput
     _min?: GoalMinOrderByAggregateInput
@@ -4336,12 +5654,14 @@ export namespace Prisma {
     OR?: GoalScalarWhereWithAggregatesInput[]
     NOT?: GoalScalarWhereWithAggregatesInput | GoalScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Goal"> | string
+    type?: EnumTypeWithAggregatesFilter<"Goal"> | $Enums.Type
     goalTitle?: StringWithAggregatesFilter<"Goal"> | string
     deadline?: DateTimeWithAggregatesFilter<"Goal"> | Date | string
     outcome?: StringWithAggregatesFilter<"Goal"> | string
     status?: EnumStatusWithAggregatesFilter<"Goal"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"Goal"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Goal"> | Date | string
+    visionId?: StringWithAggregatesFilter<"Goal"> | string
   }
 
   export type MilestoneWhereInput = {
@@ -4349,6 +5669,7 @@ export namespace Prisma {
     OR?: MilestoneWhereInput[]
     NOT?: MilestoneWhereInput | MilestoneWhereInput[]
     id?: StringFilter<"Milestone"> | string
+    type?: EnumTypeFilter<"Milestone"> | $Enums.Type
     milestoneName?: StringFilter<"Milestone"> | string
     milestoneDeadline?: DateTimeFilter<"Milestone"> | Date | string
     milestoneOutcome?: StringFilter<"Milestone"> | string
@@ -4362,6 +5683,7 @@ export namespace Prisma {
 
   export type MilestoneOrderByWithRelationInput = {
     id?: SortOrder
+    type?: SortOrder
     milestoneName?: SortOrder
     milestoneDeadline?: SortOrder
     milestoneOutcome?: SortOrder
@@ -4378,6 +5700,7 @@ export namespace Prisma {
     AND?: MilestoneWhereInput | MilestoneWhereInput[]
     OR?: MilestoneWhereInput[]
     NOT?: MilestoneWhereInput | MilestoneWhereInput[]
+    type?: EnumTypeFilter<"Milestone"> | $Enums.Type
     milestoneName?: StringFilter<"Milestone"> | string
     milestoneDeadline?: DateTimeFilter<"Milestone"> | Date | string
     milestoneOutcome?: StringFilter<"Milestone"> | string
@@ -4391,6 +5714,7 @@ export namespace Prisma {
 
   export type MilestoneOrderByWithAggregationInput = {
     id?: SortOrder
+    type?: SortOrder
     milestoneName?: SortOrder
     milestoneDeadline?: SortOrder
     milestoneOutcome?: SortOrder
@@ -4408,6 +5732,7 @@ export namespace Prisma {
     OR?: MilestoneScalarWhereWithAggregatesInput[]
     NOT?: MilestoneScalarWhereWithAggregatesInput | MilestoneScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Milestone"> | string
+    type?: EnumTypeWithAggregatesFilter<"Milestone"> | $Enums.Type
     milestoneName?: StringWithAggregatesFilter<"Milestone"> | string
     milestoneDeadline?: DateTimeWithAggregatesFilter<"Milestone"> | Date | string
     milestoneOutcome?: StringWithAggregatesFilter<"Milestone"> | string
@@ -4422,6 +5747,7 @@ export namespace Prisma {
     OR?: ActionStepWhereInput[]
     NOT?: ActionStepWhereInput | ActionStepWhereInput[]
     id?: StringFilter<"ActionStep"> | string
+    type?: EnumTypeFilter<"ActionStep"> | $Enums.Type
     actionName?: StringFilter<"ActionStep"> | string
     actionDeadline?: DateTimeFilter<"ActionStep"> | Date | string
     status?: EnumStatusFilter<"ActionStep"> | $Enums.Status
@@ -4433,6 +5759,7 @@ export namespace Prisma {
 
   export type ActionStepOrderByWithRelationInput = {
     id?: SortOrder
+    type?: SortOrder
     actionName?: SortOrder
     actionDeadline?: SortOrder
     status?: SortOrder
@@ -4447,6 +5774,7 @@ export namespace Prisma {
     AND?: ActionStepWhereInput | ActionStepWhereInput[]
     OR?: ActionStepWhereInput[]
     NOT?: ActionStepWhereInput | ActionStepWhereInput[]
+    type?: EnumTypeFilter<"ActionStep"> | $Enums.Type
     actionName?: StringFilter<"ActionStep"> | string
     actionDeadline?: DateTimeFilter<"ActionStep"> | Date | string
     status?: EnumStatusFilter<"ActionStep"> | $Enums.Status
@@ -4458,6 +5786,7 @@ export namespace Prisma {
 
   export type ActionStepOrderByWithAggregationInput = {
     id?: SortOrder
+    type?: SortOrder
     actionName?: SortOrder
     actionDeadline?: SortOrder
     status?: SortOrder
@@ -4474,6 +5803,7 @@ export namespace Prisma {
     OR?: ActionStepScalarWhereWithAggregatesInput[]
     NOT?: ActionStepScalarWhereWithAggregatesInput | ActionStepScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ActionStep"> | string
+    type?: EnumTypeWithAggregatesFilter<"ActionStep"> | $Enums.Type
     actionName?: StringWithAggregatesFilter<"ActionStep"> | string
     actionDeadline?: DateTimeWithAggregatesFilter<"ActionStep"> | Date | string
     status?: EnumStatusWithAggregatesFilter<"ActionStep"> | $Enums.Status
@@ -4482,59 +5812,140 @@ export namespace Prisma {
     milestoneId?: StringWithAggregatesFilter<"ActionStep"> | string
   }
 
+  export type VisionCreateInput = {
+    id?: string
+    visionTitle: string
+    visionDescription: string
+    status?: $Enums.Status
+    type: $Enums.Type
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    goals?: GoalCreateNestedManyWithoutVisionInput
+  }
+
+  export type VisionUncheckedCreateInput = {
+    id?: string
+    visionTitle: string
+    visionDescription: string
+    status?: $Enums.Status
+    type: $Enums.Type
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    goals?: GoalUncheckedCreateNestedManyWithoutVisionInput
+  }
+
+  export type VisionUpdateInput = {
+    visionTitle?: StringFieldUpdateOperationsInput | string
+    visionDescription?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    goals?: GoalUpdateManyWithoutVisionNestedInput
+  }
+
+  export type VisionUncheckedUpdateInput = {
+    visionTitle?: StringFieldUpdateOperationsInput | string
+    visionDescription?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    goals?: GoalUncheckedUpdateManyWithoutVisionNestedInput
+  }
+
+  export type VisionCreateManyInput = {
+    id?: string
+    visionTitle: string
+    visionDescription: string
+    status?: $Enums.Status
+    type: $Enums.Type
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VisionUpdateManyMutationInput = {
+    visionTitle?: StringFieldUpdateOperationsInput | string
+    visionDescription?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VisionUncheckedUpdateManyInput = {
+    visionTitle?: StringFieldUpdateOperationsInput | string
+    visionDescription?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type GoalCreateInput = {
     id?: string
+    type: $Enums.Type
     goalTitle: string
     deadline: Date | string
     outcome: string
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    vision: VisionCreateNestedOneWithoutGoalsInput
     milestones?: MilestoneCreateNestedManyWithoutGoalInput
   }
 
   export type GoalUncheckedCreateInput = {
     id?: string
+    type: $Enums.Type
     goalTitle: string
     deadline: Date | string
     outcome: string
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    visionId: string
     milestones?: MilestoneUncheckedCreateNestedManyWithoutGoalInput
   }
 
   export type GoalUpdateInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     goalTitle?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     outcome?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vision?: VisionUpdateOneRequiredWithoutGoalsNestedInput
     milestones?: MilestoneUpdateManyWithoutGoalNestedInput
   }
 
   export type GoalUncheckedUpdateInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     goalTitle?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     outcome?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    visionId?: StringFieldUpdateOperationsInput | string
     milestones?: MilestoneUncheckedUpdateManyWithoutGoalNestedInput
   }
 
   export type GoalCreateManyInput = {
     id?: string
+    type: $Enums.Type
     goalTitle: string
     deadline: Date | string
     outcome: string
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    visionId: string
   }
 
   export type GoalUpdateManyMutationInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     goalTitle?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     outcome?: StringFieldUpdateOperationsInput | string
@@ -4544,16 +5955,19 @@ export namespace Prisma {
   }
 
   export type GoalUncheckedUpdateManyInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     goalTitle?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     outcome?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    visionId?: StringFieldUpdateOperationsInput | string
   }
 
   export type MilestoneCreateInput = {
     id?: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date | string
     milestoneOutcome: string
@@ -4566,6 +5980,7 @@ export namespace Prisma {
 
   export type MilestoneUncheckedCreateInput = {
     id?: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date | string
     milestoneOutcome: string
@@ -4577,6 +5992,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUpdateInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -4588,6 +6004,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUncheckedUpdateInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -4600,6 +6017,7 @@ export namespace Prisma {
 
   export type MilestoneCreateManyInput = {
     id?: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date | string
     milestoneOutcome: string
@@ -4610,6 +6028,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUpdateManyMutationInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -4619,6 +6038,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUncheckedUpdateManyInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -4630,6 +6050,7 @@ export namespace Prisma {
 
   export type ActionStepCreateInput = {
     id?: string
+    type: $Enums.Type
     actionName: string
     actionDeadline: Date | string
     status?: $Enums.Status
@@ -4640,6 +6061,7 @@ export namespace Prisma {
 
   export type ActionStepUncheckedCreateInput = {
     id?: string
+    type: $Enums.Type
     actionName: string
     actionDeadline: Date | string
     status?: $Enums.Status
@@ -4649,6 +6071,7 @@ export namespace Prisma {
   }
 
   export type ActionStepUpdateInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     actionName?: StringFieldUpdateOperationsInput | string
     actionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -4658,6 +6081,7 @@ export namespace Prisma {
   }
 
   export type ActionStepUncheckedUpdateInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     actionName?: StringFieldUpdateOperationsInput | string
     actionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -4668,6 +6092,7 @@ export namespace Prisma {
 
   export type ActionStepCreateManyInput = {
     id?: string
+    type: $Enums.Type
     actionName: string
     actionDeadline: Date | string
     status?: $Enums.Status
@@ -4677,6 +6102,7 @@ export namespace Prisma {
   }
 
   export type ActionStepUpdateManyMutationInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     actionName?: StringFieldUpdateOperationsInput | string
     actionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -4685,6 +6111,7 @@ export namespace Prisma {
   }
 
   export type ActionStepUncheckedUpdateManyInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     actionName?: StringFieldUpdateOperationsInput | string
     actionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -4708,6 +6135,20 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type EnumTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.Type | EnumTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTypeFilter<$PrismaModel> | $Enums.Type
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -4719,49 +6160,42 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type EnumStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  export type GoalListRelationFilter = {
+    every?: GoalWhereInput
+    some?: GoalWhereInput
+    none?: GoalWhereInput
   }
 
-  export type MilestoneListRelationFilter = {
-    every?: MilestoneWhereInput
-    some?: MilestoneWhereInput
-    none?: MilestoneWhereInput
-  }
-
-  export type MilestoneOrderByRelationAggregateInput = {
+  export type GoalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type GoalCountOrderByAggregateInput = {
+  export type VisionCountOrderByAggregateInput = {
     id?: SortOrder
-    goalTitle?: SortOrder
-    deadline?: SortOrder
-    outcome?: SortOrder
+    visionTitle?: SortOrder
+    visionDescription?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type GoalMaxOrderByAggregateInput = {
+  export type VisionMaxOrderByAggregateInput = {
     id?: SortOrder
-    goalTitle?: SortOrder
-    deadline?: SortOrder
-    outcome?: SortOrder
+    visionTitle?: SortOrder
+    visionDescription?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type GoalMinOrderByAggregateInput = {
+  export type VisionMinOrderByAggregateInput = {
     id?: SortOrder
-    goalTitle?: SortOrder
-    deadline?: SortOrder
-    outcome?: SortOrder
+    visionTitle?: SortOrder
+    visionDescription?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4784,6 +6218,26 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
+  export type EnumTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Type | EnumTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTypeWithAggregatesFilter<$PrismaModel> | $Enums.Type
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTypeFilter<$PrismaModel>
+    _max?: NestedEnumTypeFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -4798,14 +6252,55 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumStatusFilter<$PrismaModel>
-    _max?: NestedEnumStatusFilter<$PrismaModel>
+  export type VisionScalarRelationFilter = {
+    is?: VisionWhereInput
+    isNot?: VisionWhereInput
+  }
+
+  export type MilestoneListRelationFilter = {
+    every?: MilestoneWhereInput
+    some?: MilestoneWhereInput
+    none?: MilestoneWhereInput
+  }
+
+  export type MilestoneOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GoalCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    goalTitle?: SortOrder
+    deadline?: SortOrder
+    outcome?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    visionId?: SortOrder
+  }
+
+  export type GoalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    goalTitle?: SortOrder
+    deadline?: SortOrder
+    outcome?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    visionId?: SortOrder
+  }
+
+  export type GoalMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    goalTitle?: SortOrder
+    deadline?: SortOrder
+    outcome?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    visionId?: SortOrder
   }
 
   export type GoalScalarRelationFilter = {
@@ -4825,6 +6320,7 @@ export namespace Prisma {
 
   export type MilestoneCountOrderByAggregateInput = {
     id?: SortOrder
+    type?: SortOrder
     milestoneName?: SortOrder
     milestoneDeadline?: SortOrder
     milestoneOutcome?: SortOrder
@@ -4836,6 +6332,7 @@ export namespace Prisma {
 
   export type MilestoneMaxOrderByAggregateInput = {
     id?: SortOrder
+    type?: SortOrder
     milestoneName?: SortOrder
     milestoneDeadline?: SortOrder
     milestoneOutcome?: SortOrder
@@ -4847,6 +6344,7 @@ export namespace Prisma {
 
   export type MilestoneMinOrderByAggregateInput = {
     id?: SortOrder
+    type?: SortOrder
     milestoneName?: SortOrder
     milestoneDeadline?: SortOrder
     milestoneOutcome?: SortOrder
@@ -4863,6 +6361,7 @@ export namespace Prisma {
 
   export type ActionStepCountOrderByAggregateInput = {
     id?: SortOrder
+    type?: SortOrder
     actionName?: SortOrder
     actionDeadline?: SortOrder
     status?: SortOrder
@@ -4873,6 +6372,7 @@ export namespace Prisma {
 
   export type ActionStepMaxOrderByAggregateInput = {
     id?: SortOrder
+    type?: SortOrder
     actionName?: SortOrder
     actionDeadline?: SortOrder
     status?: SortOrder
@@ -4883,12 +6383,77 @@ export namespace Prisma {
 
   export type ActionStepMinOrderByAggregateInput = {
     id?: SortOrder
+    type?: SortOrder
     actionName?: SortOrder
     actionDeadline?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     milestoneId?: SortOrder
+  }
+
+  export type GoalCreateNestedManyWithoutVisionInput = {
+    create?: XOR<GoalCreateWithoutVisionInput, GoalUncheckedCreateWithoutVisionInput> | GoalCreateWithoutVisionInput[] | GoalUncheckedCreateWithoutVisionInput[]
+    connectOrCreate?: GoalCreateOrConnectWithoutVisionInput | GoalCreateOrConnectWithoutVisionInput[]
+    createMany?: GoalCreateManyVisionInputEnvelope
+    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+  }
+
+  export type GoalUncheckedCreateNestedManyWithoutVisionInput = {
+    create?: XOR<GoalCreateWithoutVisionInput, GoalUncheckedCreateWithoutVisionInput> | GoalCreateWithoutVisionInput[] | GoalUncheckedCreateWithoutVisionInput[]
+    connectOrCreate?: GoalCreateOrConnectWithoutVisionInput | GoalCreateOrConnectWithoutVisionInput[]
+    createMany?: GoalCreateManyVisionInputEnvelope
+    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
+  }
+
+  export type EnumTypeFieldUpdateOperationsInput = {
+    set?: $Enums.Type
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type GoalUpdateManyWithoutVisionNestedInput = {
+    create?: XOR<GoalCreateWithoutVisionInput, GoalUncheckedCreateWithoutVisionInput> | GoalCreateWithoutVisionInput[] | GoalUncheckedCreateWithoutVisionInput[]
+    connectOrCreate?: GoalCreateOrConnectWithoutVisionInput | GoalCreateOrConnectWithoutVisionInput[]
+    upsert?: GoalUpsertWithWhereUniqueWithoutVisionInput | GoalUpsertWithWhereUniqueWithoutVisionInput[]
+    createMany?: GoalCreateManyVisionInputEnvelope
+    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    update?: GoalUpdateWithWhereUniqueWithoutVisionInput | GoalUpdateWithWhereUniqueWithoutVisionInput[]
+    updateMany?: GoalUpdateManyWithWhereWithoutVisionInput | GoalUpdateManyWithWhereWithoutVisionInput[]
+    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  }
+
+  export type GoalUncheckedUpdateManyWithoutVisionNestedInput = {
+    create?: XOR<GoalCreateWithoutVisionInput, GoalUncheckedCreateWithoutVisionInput> | GoalCreateWithoutVisionInput[] | GoalUncheckedCreateWithoutVisionInput[]
+    connectOrCreate?: GoalCreateOrConnectWithoutVisionInput | GoalCreateOrConnectWithoutVisionInput[]
+    upsert?: GoalUpsertWithWhereUniqueWithoutVisionInput | GoalUpsertWithWhereUniqueWithoutVisionInput[]
+    createMany?: GoalCreateManyVisionInputEnvelope
+    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    update?: GoalUpdateWithWhereUniqueWithoutVisionInput | GoalUpdateWithWhereUniqueWithoutVisionInput[]
+    updateMany?: GoalUpdateManyWithWhereWithoutVisionInput | GoalUpdateManyWithWhereWithoutVisionInput[]
+    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  }
+
+  export type VisionCreateNestedOneWithoutGoalsInput = {
+    create?: XOR<VisionCreateWithoutGoalsInput, VisionUncheckedCreateWithoutGoalsInput>
+    connectOrCreate?: VisionCreateOrConnectWithoutGoalsInput
+    connect?: VisionWhereUniqueInput
   }
 
   export type MilestoneCreateNestedManyWithoutGoalInput = {
@@ -4905,16 +6470,12 @@ export namespace Prisma {
     connect?: MilestoneWhereUniqueInput | MilestoneWhereUniqueInput[]
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
-  export type EnumStatusFieldUpdateOperationsInput = {
-    set?: $Enums.Status
+  export type VisionUpdateOneRequiredWithoutGoalsNestedInput = {
+    create?: XOR<VisionCreateWithoutGoalsInput, VisionUncheckedCreateWithoutGoalsInput>
+    connectOrCreate?: VisionCreateOrConnectWithoutGoalsInput
+    upsert?: VisionUpsertWithoutGoalsInput
+    connect?: VisionWhereUniqueInput
+    update?: XOR<XOR<VisionUpdateToOneWithWhereWithoutGoalsInput, VisionUpdateWithoutGoalsInput>, VisionUncheckedUpdateWithoutGoalsInput>
   }
 
   export type MilestoneUpdateManyWithoutGoalNestedInput = {
@@ -5029,6 +6590,20 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type NestedEnumTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.Type | EnumTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTypeFilter<$PrismaModel> | $Enums.Type
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5038,13 +6613,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type NestedEnumStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5075,6 +6643,26 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Type | EnumTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTypeWithAggregatesFilter<$PrismaModel> | $Enums.Type
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTypeFilter<$PrismaModel>
+    _max?: NestedEnumTypeFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5089,18 +6677,98 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumStatusFilter<$PrismaModel>
-    _max?: NestedEnumStatusFilter<$PrismaModel>
+  export type GoalCreateWithoutVisionInput = {
+    id?: string
+    type: $Enums.Type
+    goalTitle: string
+    deadline: Date | string
+    outcome: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    milestones?: MilestoneCreateNestedManyWithoutGoalInput
+  }
+
+  export type GoalUncheckedCreateWithoutVisionInput = {
+    id?: string
+    type: $Enums.Type
+    goalTitle: string
+    deadline: Date | string
+    outcome: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    milestones?: MilestoneUncheckedCreateNestedManyWithoutGoalInput
+  }
+
+  export type GoalCreateOrConnectWithoutVisionInput = {
+    where: GoalWhereUniqueInput
+    create: XOR<GoalCreateWithoutVisionInput, GoalUncheckedCreateWithoutVisionInput>
+  }
+
+  export type GoalCreateManyVisionInputEnvelope = {
+    data: GoalCreateManyVisionInput | GoalCreateManyVisionInput[]
+  }
+
+  export type GoalUpsertWithWhereUniqueWithoutVisionInput = {
+    where: GoalWhereUniqueInput
+    update: XOR<GoalUpdateWithoutVisionInput, GoalUncheckedUpdateWithoutVisionInput>
+    create: XOR<GoalCreateWithoutVisionInput, GoalUncheckedCreateWithoutVisionInput>
+  }
+
+  export type GoalUpdateWithWhereUniqueWithoutVisionInput = {
+    where: GoalWhereUniqueInput
+    data: XOR<GoalUpdateWithoutVisionInput, GoalUncheckedUpdateWithoutVisionInput>
+  }
+
+  export type GoalUpdateManyWithWhereWithoutVisionInput = {
+    where: GoalScalarWhereInput
+    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyWithoutVisionInput>
+  }
+
+  export type GoalScalarWhereInput = {
+    AND?: GoalScalarWhereInput | GoalScalarWhereInput[]
+    OR?: GoalScalarWhereInput[]
+    NOT?: GoalScalarWhereInput | GoalScalarWhereInput[]
+    id?: StringFilter<"Goal"> | string
+    type?: EnumTypeFilter<"Goal"> | $Enums.Type
+    goalTitle?: StringFilter<"Goal"> | string
+    deadline?: DateTimeFilter<"Goal"> | Date | string
+    outcome?: StringFilter<"Goal"> | string
+    status?: EnumStatusFilter<"Goal"> | $Enums.Status
+    createdAt?: DateTimeFilter<"Goal"> | Date | string
+    updatedAt?: DateTimeFilter<"Goal"> | Date | string
+    visionId?: StringFilter<"Goal"> | string
+  }
+
+  export type VisionCreateWithoutGoalsInput = {
+    id?: string
+    visionTitle: string
+    visionDescription: string
+    status?: $Enums.Status
+    type: $Enums.Type
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VisionUncheckedCreateWithoutGoalsInput = {
+    id?: string
+    visionTitle: string
+    visionDescription: string
+    status?: $Enums.Status
+    type: $Enums.Type
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VisionCreateOrConnectWithoutGoalsInput = {
+    where: VisionWhereUniqueInput
+    create: XOR<VisionCreateWithoutGoalsInput, VisionUncheckedCreateWithoutGoalsInput>
   }
 
   export type MilestoneCreateWithoutGoalInput = {
     id?: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date | string
     milestoneOutcome: string
@@ -5112,6 +6780,7 @@ export namespace Prisma {
 
   export type MilestoneUncheckedCreateWithoutGoalInput = {
     id?: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date | string
     milestoneOutcome: string
@@ -5128,6 +6797,35 @@ export namespace Prisma {
 
   export type MilestoneCreateManyGoalInputEnvelope = {
     data: MilestoneCreateManyGoalInput | MilestoneCreateManyGoalInput[]
+  }
+
+  export type VisionUpsertWithoutGoalsInput = {
+    update: XOR<VisionUpdateWithoutGoalsInput, VisionUncheckedUpdateWithoutGoalsInput>
+    create: XOR<VisionCreateWithoutGoalsInput, VisionUncheckedCreateWithoutGoalsInput>
+    where?: VisionWhereInput
+  }
+
+  export type VisionUpdateToOneWithWhereWithoutGoalsInput = {
+    where?: VisionWhereInput
+    data: XOR<VisionUpdateWithoutGoalsInput, VisionUncheckedUpdateWithoutGoalsInput>
+  }
+
+  export type VisionUpdateWithoutGoalsInput = {
+    visionTitle?: StringFieldUpdateOperationsInput | string
+    visionDescription?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VisionUncheckedUpdateWithoutGoalsInput = {
+    visionTitle?: StringFieldUpdateOperationsInput | string
+    visionDescription?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MilestoneUpsertWithWhereUniqueWithoutGoalInput = {
@@ -5151,6 +6849,7 @@ export namespace Prisma {
     OR?: MilestoneScalarWhereInput[]
     NOT?: MilestoneScalarWhereInput | MilestoneScalarWhereInput[]
     id?: StringFilter<"Milestone"> | string
+    type?: EnumTypeFilter<"Milestone"> | $Enums.Type
     milestoneName?: StringFilter<"Milestone"> | string
     milestoneDeadline?: DateTimeFilter<"Milestone"> | Date | string
     milestoneOutcome?: StringFilter<"Milestone"> | string
@@ -5162,22 +6861,26 @@ export namespace Prisma {
 
   export type GoalCreateWithoutMilestonesInput = {
     id?: string
+    type: $Enums.Type
     goalTitle: string
     deadline: Date | string
     outcome: string
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    vision: VisionCreateNestedOneWithoutGoalsInput
   }
 
   export type GoalUncheckedCreateWithoutMilestonesInput = {
     id?: string
+    type: $Enums.Type
     goalTitle: string
     deadline: Date | string
     outcome: string
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    visionId: string
   }
 
   export type GoalCreateOrConnectWithoutMilestonesInput = {
@@ -5187,6 +6890,7 @@ export namespace Prisma {
 
   export type ActionStepCreateWithoutMilestoneInput = {
     id?: string
+    type: $Enums.Type
     actionName: string
     actionDeadline: Date | string
     status?: $Enums.Status
@@ -5196,6 +6900,7 @@ export namespace Prisma {
 
   export type ActionStepUncheckedCreateWithoutMilestoneInput = {
     id?: string
+    type: $Enums.Type
     actionName: string
     actionDeadline: Date | string
     status?: $Enums.Status
@@ -5224,21 +6929,25 @@ export namespace Prisma {
   }
 
   export type GoalUpdateWithoutMilestonesInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     goalTitle?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     outcome?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vision?: VisionUpdateOneRequiredWithoutGoalsNestedInput
   }
 
   export type GoalUncheckedUpdateWithoutMilestonesInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     goalTitle?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     outcome?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    visionId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ActionStepUpsertWithWhereUniqueWithoutMilestoneInput = {
@@ -5262,6 +6971,7 @@ export namespace Prisma {
     OR?: ActionStepScalarWhereInput[]
     NOT?: ActionStepScalarWhereInput | ActionStepScalarWhereInput[]
     id?: StringFilter<"ActionStep"> | string
+    type?: EnumTypeFilter<"ActionStep"> | $Enums.Type
     actionName?: StringFilter<"ActionStep"> | string
     actionDeadline?: DateTimeFilter<"ActionStep"> | Date | string
     status?: EnumStatusFilter<"ActionStep"> | $Enums.Status
@@ -5272,6 +6982,7 @@ export namespace Prisma {
 
   export type MilestoneCreateWithoutActionStepsInput = {
     id?: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date | string
     milestoneOutcome: string
@@ -5283,6 +6994,7 @@ export namespace Prisma {
 
   export type MilestoneUncheckedCreateWithoutActionStepsInput = {
     id?: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date | string
     milestoneOutcome: string
@@ -5309,6 +7021,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUpdateWithoutActionStepsInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -5319,6 +7032,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUncheckedUpdateWithoutActionStepsInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -5328,8 +7042,52 @@ export namespace Prisma {
     goalId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type GoalCreateManyVisionInput = {
+    id?: string
+    type: $Enums.Type
+    goalTitle: string
+    deadline: Date | string
+    outcome: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GoalUpdateWithoutVisionInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    goalTitle?: StringFieldUpdateOperationsInput | string
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    outcome?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    milestones?: MilestoneUpdateManyWithoutGoalNestedInput
+  }
+
+  export type GoalUncheckedUpdateWithoutVisionInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    goalTitle?: StringFieldUpdateOperationsInput | string
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    outcome?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    milestones?: MilestoneUncheckedUpdateManyWithoutGoalNestedInput
+  }
+
+  export type GoalUncheckedUpdateManyWithoutVisionInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
+    goalTitle?: StringFieldUpdateOperationsInput | string
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    outcome?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MilestoneCreateManyGoalInput = {
     id?: string
+    type: $Enums.Type
     milestoneName: string
     milestoneDeadline: Date | string
     milestoneOutcome: string
@@ -5339,6 +7097,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUpdateWithoutGoalInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -5349,6 +7108,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUncheckedUpdateWithoutGoalInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -5359,6 +7119,7 @@ export namespace Prisma {
   }
 
   export type MilestoneUncheckedUpdateManyWithoutGoalInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     milestoneName?: StringFieldUpdateOperationsInput | string
     milestoneDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     milestoneOutcome?: StringFieldUpdateOperationsInput | string
@@ -5369,6 +7130,7 @@ export namespace Prisma {
 
   export type ActionStepCreateManyMilestoneInput = {
     id?: string
+    type: $Enums.Type
     actionName: string
     actionDeadline: Date | string
     status?: $Enums.Status
@@ -5377,6 +7139,7 @@ export namespace Prisma {
   }
 
   export type ActionStepUpdateWithoutMilestoneInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     actionName?: StringFieldUpdateOperationsInput | string
     actionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -5385,6 +7148,7 @@ export namespace Prisma {
   }
 
   export type ActionStepUncheckedUpdateWithoutMilestoneInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     actionName?: StringFieldUpdateOperationsInput | string
     actionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -5393,6 +7157,7 @@ export namespace Prisma {
   }
 
   export type ActionStepUncheckedUpdateManyWithoutMilestoneInput = {
+    type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     actionName?: StringFieldUpdateOperationsInput | string
     actionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status

@@ -113,18 +113,31 @@ Prisma.NullTypes = {
  * Enums
  */
 
+exports.Prisma.VisionScalarFieldEnum = {
+  id: 'id',
+  visionTitle: 'visionTitle',
+  visionDescription: 'visionDescription',
+  status: 'status',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.GoalScalarFieldEnum = {
   id: 'id',
+  type: 'type',
   goalTitle: 'goalTitle',
   deadline: 'deadline',
   outcome: 'outcome',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  visionId: 'visionId'
 };
 
 exports.Prisma.MilestoneScalarFieldEnum = {
   id: 'id',
+  type: 'type',
   milestoneName: 'milestoneName',
   milestoneDeadline: 'milestoneDeadline',
   milestoneOutcome: 'milestoneOutcome',
@@ -136,6 +149,7 @@ exports.Prisma.MilestoneScalarFieldEnum = {
 
 exports.Prisma.ActionStepScalarFieldEnum = {
   id: 'id',
+  type: 'type',
   actionName: 'actionName',
   actionDeadline: 'actionDeadline',
   status: 'status',
@@ -160,7 +174,15 @@ exports.Status = exports.$Enums.Status = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.Type = exports.$Enums.Type = {
+  VISION: 'VISION',
+  GOAL: 'GOAL',
+  MILESTONE: 'MILESTONE',
+  ACTION_STEP: 'ACTION_STEP'
+};
+
 exports.Prisma.ModelName = {
+  Vision: 'Vision',
   Goal: 'Goal',
   Milestone: 'Milestone',
   ActionStep: 'ActionStep'

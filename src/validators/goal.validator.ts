@@ -42,3 +42,13 @@ export const validateGoal = [
         .isIn(["IN_PROGRESS", "COMPLETED", "NOT_STARTED", "CANCELLED"])
         .withMessage("Invalid milestone status"),
 ];
+
+export const validateVision = [
+    body("vision_title").notEmpty().withMessage("Vision title is required"),
+    body("vision_description")
+        .notEmpty()
+        .withMessage("Description is required"),
+    body("status")
+        .isIn(["IN_PROGRESS", "COMPLETED", "NOT_STARTED", "CANCELLED"])
+        .withMessage("Invalid status"),
+];
