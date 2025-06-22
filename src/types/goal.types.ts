@@ -13,6 +13,7 @@ export interface Milestone {
 }
 
 export interface GoalInput {
+    vision_id: string;
     goal_title: string;
     deadline: string;
     outcome: string;

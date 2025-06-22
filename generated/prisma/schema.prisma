@@ -14,8 +14,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Vision {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  visionTitle       String   @map("vision_title")
+  visionDescription String   @map("vision_description")
+  status            Status   @default(IN_PROGRESS)
+  type              Type
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  goals Goal[]
+
+  @@map("visions")
+}
+
 model Goal {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  type      Type
   goalTitle String   @map("goal_title")
   deadline  DateTime
   outcome   String
@@ -23,7 +39,11 @@ model Goal {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  // Foreign Keys
+  visionId String @map("vision_id") @db.ObjectId
+
   // Relationships
+  vision     Vision      @relation(fields: [visionId], references: [id])
   milestones Milestone[]
 
   @@map("goals")
@@ -31,6 +51,7 @@ model Goal {
 
 model Milestone {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  type              Type
   milestoneName     String   @map("milestone_name")
   milestoneDeadline DateTime @map("milestone_deadline")
   milestoneOutcome  String   @map("milestone_outcome")
@@ -50,6 +71,7 @@ model Milestone {
 
 model ActionStep {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  type           Type
   actionName     String   @map("action_name")
   actionDeadline DateTime @map("action_deadline")
   status         Status   @default(IN_PROGRESS)
@@ -72,4 +94,13 @@ enum Status {
   CANCELLED   @map("cancelled")
 
   @@map("status")
+}
+
+enum Type {
+  VISION      @map("vision")
+  GOAL        @map("goal")
+  MILESTONE   @map("milestone")
+  ACTION_STEP @map("action_step")
+
+  @@map("type")
 }
