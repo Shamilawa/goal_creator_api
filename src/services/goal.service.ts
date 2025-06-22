@@ -1,6 +1,5 @@
 import { PrismaClient, Status } from "../../generated/prisma";
 import { ActionStep, GoalInput, Milestone } from "../types";
-import { v4 as uuidv4 } from "uuid";
 
 const prisma = new PrismaClient();
 
