@@ -6,11 +6,7 @@ const prisma = new PrismaClient();
 export class VisionService {
     async getVisions() {
         try {
-            const visions = await prisma.vision.findMany({
-                include: {
-                    goals: true,
-                },
-            });
+            const visions = await prisma.vision.findMany();
 
             return visions;
         } catch (error) {
