@@ -6,7 +6,7 @@ import { asyncHandler } from "../middleware/async-handler";
 
 const router = Router();
 
-router.get("/:vision_id", asyncHandler(getGoalsByVisionId));
+router.get("/:visionId", asyncHandler(getGoalsByVisionId));
 router.post(
     "/",
     validateGoal,

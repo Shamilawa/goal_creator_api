@@ -4,7 +4,7 @@ import { GoalService } from "../services/goal.service";
 const goalService = new GoalService();
 
 export const getGoalsByVisionId = async (req: Request, res: Response) => {
-    const { visionId } = req.query;
+    const { visionId } = req.params;
 
     if (!visionId || typeof visionId !== "string") {
         return res.status(400).json({ error: "Invalid or missing visionId" });
