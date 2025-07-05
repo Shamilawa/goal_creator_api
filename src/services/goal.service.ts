@@ -18,6 +18,9 @@ export class GoalService {
                         },
                     },
                 },
+                orderBy: {
+                    createdAt: "asc",
+                },
             });
 
             return goals;
